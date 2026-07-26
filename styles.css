@@ -1,0 +1,764 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+    color: #fff;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    gap: 20px;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* История панель */
+.history-panel {
+    width: 250px;
+    background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+    border: 2px solid #3b82f6;
+    border-radius: 15px;
+    padding: 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+}
+
+.history-panel h3 {
+    color: #60a5fa;
+    margin-bottom: 15px;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.history-item {
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+    border-left: 4px solid #3b82f6;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    transition: all 0.3s ease;
+    animation: slideIn 0.3s ease;
+}
+
+.history-item:hover {
+    background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+}
+
+.history-item-title {
+    color: #60a5fa;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.history-item-bet {
+    color: #93c5fd;
+}
+
+.history-item-result {
+    color: #fbbf24;
+    margin-top: 5px;
+}
+
+.empty-history {
+    color: #64748b;
+    text-align: center;
+    padding: 30px 10px;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Основной контент */
+.main-content {
+    flex: 1;
+}
+
+/* Навигация режимов */
+.mode-nav {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.mode-btn {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+    border: 2px solid #3b82f6;
+    color: #60a5fa;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.mode-btn:hover {
+    background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
+    transform: translateY(-2px);
+}
+
+.mode-btn.active {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: #fff;
+    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.6);
+    transform: scale(1.05);
+}
+
+/* Контент режимов */
+.mode-content {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.mode-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Общие стили контейнеров */
+.case-battle-container,
+.upgrader-container,
+.crash-container,
+.ladder-container,
+.minesweeper-container {
+    background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+    border: 2px solid #3b82f6;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+}
+
+h2 {
+    color: #60a5fa;
+    margin-bottom: 20px;
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 10px rgba(59, 130, 246, 0.5);
+}
+
+.mode-info {
+    color: #93c5fd;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+/* Выбор кейса */
+.case-selection {
+    margin-bottom: 20px;
+}
+
+.case-selection label {
+    display: block;
+    color: #60a5fa;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.case-selection select {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+    border: 2px solid #3b82f6;
+    color: #60a5fa;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.case-selection select:hover,
+.case-selection select:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+}
+
+/* Ставка */
+.bet-amount {
+    margin-bottom: 30px;
+}
+
+.bet-amount label {
+    display: block;
+    color: #60a5fa;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.bet-input-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.bet-btn {
+    padding: 10px 18px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    border: 2px solid #3b82f6;
+    color: #60a5fa;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.bet-btn:hover {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+    transform: scale(1.05);
+}
+
+.bet-btn:active {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+#betInput,
+#upgraderBetInput,
+#crashBetInput,
+#ladderBetInput,
+#minesweeperBetInput {
+    padding: 10px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    border: 2px solid #3b82f6;
+    color: #60a5fa;
+    border-radius: 8px;
+    font-size: 14px;
+    flex: 1;
+    min-width: 150px;
+}
+
+#betInput:focus,
+#upgraderBetInput:focus,
+#crashBetInput:focus,
+#ladderBetInput:focus,
+#minesweeperBetInput:focus {
+    outline: none;
+    border-color: #60a5fa;
+    box-shadow: 0 0 10px rgba(96, 165, 250, 0.5);
+}
+
+.bet-display {
+    color: #fbbf24;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Case Wheel */
+.case-wheel-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+    perspective: 1000px;
+}
+
+.case-wheel {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: conic-gradient(
+        from 0deg,
+        #1e90ff 0deg 45deg,
+        #228b22 45deg 90deg,
+        #ff1493 90deg 135deg,
+        #ffd700 135deg 180deg,
+        #ff4500 180deg 225deg,
+        #9370db 225deg 270deg,
+        #c0c0c0 270deg 315deg,
+        #8b4513 315deg 360deg
+    );
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.6), inset 0 0 30px rgba(0, 0, 0, 0.5);
+    border: 5px solid #3b82f6;
+    animation: spin 20s linear infinite;
+}
+
+.case-wheel.spinning {
+    animation: spinFast 0.8s ease-out;
+}
+
+.case-item {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-weight: bold;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.case-item span {
+    font-size: 12px;
+}
+
+.case-item p {
+    font-size: 10px;
+    margin-top: 3px;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes spinFast {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(3600deg);
+    }
+}
+
+.wheel-pointer {
+    position: absolute;
+    top: -15px;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 20px solid #fbbf24;
+    z-index: 10;
+    filter: drop-shadow(0 3px 5px rgba(0, 0, 0, 0.5));
+}
+
+/* Upgrader Wheel */
+.upgrader-wheel-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.upgrader-wheel {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: conic-gradient(
+        from 0deg,
+        #1e90ff 0deg 60deg,
+        #228b22 60deg 120deg,
+        #ff1493 120deg 180deg,
+        #ffd700 180deg 240deg,
+        #ff4500 240deg 300deg,
+        #9370db 300deg 360deg
+    );
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+    border: 5px solid #3b82f6;
+}
+
+.upgrader-wheel.spinning {
+    animation: spinFast 1s ease-out;
+}
+
+.upgrader-item {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-weight: bold;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.upgrader-item span {
+    font-size: 14px;
+}
+
+.upgrader-item p {
+    font-size: 9px;
+}
+
+/* Кнопка прокрутки */
+.spin-btn {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 15px rgba(59, 130, 246, 0.4);
+    margin-bottom: 20px;
+}
+
+.spin-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+    box-shadow: 0 12px 25px rgba(59, 130, 246, 0.6);
+    transform: translateY(-3px);
+}
+
+.spin-btn:active:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.spin-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Результат */
+.result,
+.crash-result,
+.ladder-result,
+.minesweeper-result {
+    margin-top: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+    border: 2px solid #3b82f6;
+    border-radius: 10px;
+    text-align: center;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #60a5fa;
+}
+
+.result.win,
+.crash-result.win,
+.ladder-result.win,
+.minesweeper-result.win {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border-color: #10b981;
+    color: #86efac;
+}
+
+.result.lose,
+.crash-result.lose,
+.ladder-result.lose,
+.minesweeper-result.lose {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    border-color: #ef4444;
+    color: #fca5a5;
+}
+
+/* Crash Game */
+.crash-game {
+    margin: 20px 0;
+}
+
+#crashCanvas {
+    width: 100%;
+    max-width: 400px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    border: 2px solid #3b82f6;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto 20px;
+}
+
+.crash-controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#cashOutValue {
+    padding: 10px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    border: 2px solid #3b82f6;
+    color: #60a5fa;
+    border-radius: 8px;
+    font-size: 14px;
+    width: 120px;
+}
+
+#crashCashOutBtn {
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#crashCashOutBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Ladder Game */
+.ladder-game {
+    margin: 20px 0;
+}
+
+.ladder-steps {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    border: 2px solid #3b82f6;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.ladder-step {
+    padding: 15px;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+    border-left: 4px solid #3b82f6;
+    border-radius: 8px;
+    color: #60a5fa;
+    font-weight: bold;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.ladder-step.active {
+    opacity: 1;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border-left-color: #fbbf24;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+}
+
+.ladder-choices {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.choice-btn {
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+    border: 2px solid #3b82f6;
+    color: #60a5fa;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.choice-btn:hover:not(:disabled) {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.5);
+}
+
+.choice-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Minesweeper Game */
+.minesweeper-game {
+    margin: 20px 0;
+}
+
+.minesweeper-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    border: 2px solid #3b82f6;
+    border-radius: 10px;
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.mine-cell {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+    border: 2px solid #3b82f6;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 24px;
+    transition: all 0.3s ease;
+}
+
+.mine-cell:hover:not(.revealed) {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    transform: scale(1.05);
+}
+
+.mine-cell.revealed {
+    cursor: not-allowed;
+}
+
+.mine-cell.safe {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    border-color: #10b981;
+    color: #86efac;
+}
+
+.mine-cell.mine {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    border-color: #ef4444;
+    color: #fca5a5;
+}
+
+.minesweeper-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#minesweeperCashOutBtn {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#minesweeperCashOutBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .history-panel {
+        width: 100%;
+        max-height: 200px;
+    }
+
+    .mode-nav {
+        justify-content: flex-start;
+        overflow-x: auto;
+    }
+
+    .case-wheel {
+        width: 250px;
+        height: 250px;
+    }
+
+    .upgrader-wheel {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .bet-input-group {
+        flex-direction: column;
+    }
+
+    .bet-btn {
+        width: 100%;
+    }
+
+    .mode-nav {
+        gap: 5px;
+    }
+
+    .mode-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .minesweeper-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+
+    .mine-cell {
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+    }
+}
