@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List - Мой список задач</title>
+    <link rel="stylesheet" href="todo-styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📝 Мой список задач</h1>
+            <p class="subtitle">Организуй свой день</p>
+        </header>
+
+        <main class="main">
+            <!-- Форма добавления задачи -->
+            <div class="input-section">
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="taskInput" 
+                        class="task-input" 
+                        placeholder="Добавь новую задачу..."
+                        autocomplete="off"
+                    >
+                    <button id="addBtn" class="add-btn">Добавить</button>
+                </div>
+                
+                <!-- Фильтры -->
+                <div class="filters">
+                    <button class="filter-btn active" data-filter="all">Все</button>
+                    <button class="filter-btn" data-filter="active">Активные</button>
+                    <button class="filter-btn" data-filter="completed">Выполненные</button>
+                </div>
+
+                <!-- Категории -->
+                <div class="categories">
+                    <label>Категория:</label>
+                    <select id="categorySelect">
+                        <option value="работа">💼 Работа</option>
+                        <option value="дом">🏠 Дом</option>
+                        <option value="покупки">🛒 Покупки</option>
+                        <option value="здоровье">💪 Здоровье</option>
+                        <option value="обучение">📚 Обучение</option>
+                        <option value="прочее">⭐ Прочее</option>
+                    </select>
+                </div>
+
+                <!-- Приоритет -->
+                <div class="priority">
+                    <label>Приоритет:</label>
+                    <div class="priority-buttons">
+                        <button class="priority-btn" data-priority="low">Низкий</button>
+                        <button class="priority-btn active" data-priority="medium">Средний</button>
+                        <button class="priority-btn" data-priority="high">Высокий</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Список задач -->
+            <section class="tasks-section">
+                <div class="tasks-header">
+                    <h2>Задачи</h2>
+                    <div class="task-stats">
+                        <span class="stat">
+                            <strong id="totalCount">0</strong> всего
+                        </span>
+                        <span class="stat">
+                            <strong id="activeCount">0</strong> активных
+                        </span>
+                        <span class="stat">
+                            <strong id="completedCount">0</strong> выполнено
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Список задач -->
+                <ul class="tasks-list" id="tasksList">
+                    <li class="empty-state">
+                        <p>🎉 Нет задач! Отлично!</p>
+                        <p>Добавь первую задачу выше</p>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Кнопки действий -->
+            <div class="actions">
+                <button id="clearCompletedBtn" class="btn btn-secondary">
+                    🗑️ Очистить выполненные
+                </button>
+                <button id="deleteAllBtn" class="btn btn-danger">
+                    ⚠️ Удалить все
+                </button>
+                <button id="exportBtn" class="btn btn-primary">
+                    📥 Экспортировать
+                </button>
+                <button id="importBtn" class="btn btn-primary">
+                    📤 Импортировать
+                </button>
+            </div>
+
+            <!-- Скрытый input для импорта -->
+            <input type="file" id="importFile" accept=".json" style="display: none;">
+
+            <!-- Прогресс-бар -->
+            <div class="progress-section">
+                <h3>Прогресс выполнения</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">0% выполнено</p>
+            </div>
+
+            <!-- Диаграмма по категориям -->
+            <div class="stats-section">
+                <h3>Статистика по категориям</h3>
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-card">
+                        <span class="stat-emoji">💼</span>
+                        <span class="stat-label">Работа</span>
+                        <span class="stat-count" data-category="работа">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-emoji">🏠</span>
+                        <span class="stat-label">Дом</span>
+                        <span class="stat-count" data-category="дом">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-emoji">🛒</span>
+                        <span class="stat-label">Покупки</span>
+                        <span class="stat-count" data-category="покупки">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-emoji">💪</span>
+                        <span class="stat-label">Здоровье</span>
+                        <span class="stat-count" data-category="здоровье">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-emoji">📚</span>
+                        <span class="stat-label">Обучение</span>
+                        <span class="stat-count" data-category="обучение">0</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-emoji">⭐</span>
+                        <span class="stat-label">Прочее</span>
+                        <span class="stat-count" data-category="прочее">0</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal для редактирования задачи -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Редактировать задачу</h2>
+            <input type="text" id="editTaskInput" class="task-input" placeholder="Текст задачи">
+            <div class="modal-buttons">
+                <button id="saveEditBtn" class="btn btn-primary">Сохранить</button>
+                <button id="cancelEditBtn" class="btn btn-secondary">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="todo-script.js"></script>
+</body>
+</html>
