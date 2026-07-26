@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlashBattle - Прокрутка кейсов</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Левая панель история -->
+        <aside class="history-panel">
+            <h3>История прокруток</h3>
+            <div class="history-list" id="historyList">
+                <p class="empty-history">История пуста</p>
+            </div>
+        </aside>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <!-- Навигация режимов -->
+            <nav class="mode-nav">
+                <button class="mode-btn active" data-mode="case-battle">Case Battle</button>
+                <button class="mode-btn" data-mode="upgrader">Upgrader</button>
+                <button class="mode-btn" data-mode="crash">Crash</button>
+                <button class="mode-btn" data-mode="ladder">Лесенка</button>
+                <button class="mode-btn" data-mode="minesweeper">Сапер</button>
+            </nav>
+
+            <!-- Case Battle режим -->
+            <section class="mode-content active" id="case-battle">
+                <div class="case-battle-container">
+                    <h2>Case Battle</h2>
+                    
+                    <div class="case-selection">
+                        <label>Выберите кейс:</label>
+                        <select id="caseSelect">
+                            <option value="premium">Premium Case - 100₽</option>
+                            <option value="gold">Gold Case - 250₽</option>
+                            <option value="diamond">Diamond Case - 500₽</option>
+                            <option value="legendary">Legendary Case - 1000₽</option>
+                            <option value="mythic">Mythic Case - 2500₽</option>
+                        </select>
+                    </div>
+
+                    <div class="bet-amount">
+                        <label>Сумма ставки:</label>
+                        <div class="bet-input-group">
+                            <button class="bet-btn" onclick="setBet(10)">10₽</button>
+                            <button class="bet-btn" onclick="setBet(50)">50₽</button>
+                            <button class="bet-btn" onclick="setBet(100)">100₽</button>
+                            <button class="bet-btn" onclick="setBet(500)">500₽</button>
+                            <input type="number" id="betInput" placeholder="Своя сумма" min="1">
+                        </div>
+                        <p class="bet-display">Текущая ставка: <span id="currentBet">0</span>₽</p>
+                    </div>
+
+                    <div class="case-wheel-container">
+                        <div class="case-wheel" id="caseWheel">
+                            <div class="case-item" style="background: linear-gradient(135deg, #1e90ff, #00bfff);">
+                                <span>Синий</span>
+                                <p>50₽</p>
+                            </div>
+                            <div class="case-item" style="background: linear-gradient(135deg, #228b22, #00ff00);">
+                                <span>Зелёный</span>
+                                <p>150₽</p>
+                            </div>
+                            <div class="case-item" style="background: linear-gradient(135deg, #ff1493, #ff69b4);">
+                                <span>Розовый</span>
+                                <p>200₽</p>
+                            </div>
+                            <div class="case-item" style="background: linear-gradient(135deg, #ffd700, #ffed4e);">
+                                <span>Жёлтый</span>
+                                <p>500₽</p>
+                            </div>
+                            <div class="case-item" style="background: linear-gradient(135deg, #ff4500, #ff6347);">
+                                <span>Оранжевый</span>
+                                <p>300₽</p>
+                            </div>
+                            <div class="case-item" style="background: linear-gradient(135deg, #9370db, #da70d6);">
+                                <span>Фиолетовый</span>
+                                <p>1000₽</p>
+                            </div>
+                            <div class="case-item" style="background: linear-gradient(135deg, #c0c0c0, #e8e8e8);">
+                                <span>Серебро</span>
+                                <p>750₽</p>
+                            </div>
+                            <div class="case-item" style="background: linear-gradient(135deg, #8b4513, #d2691e);">
+                                <span>Бронза</span>
+                                <p>400₽</p>
+                            </div>
+                        </div>
+                        <div class="wheel-pointer"></div>
+                    </div>
+
+                    <button class="spin-btn" id="spinBtn" onclick="spinWheel()">ПРОКРУТИТЬ</button>
+
+                    <div class="result" id="result"></div>
+                </div>
+            </section>
+
+            <!-- Upgrader режим -->
+            <section class="mode-content" id="upgrader">
+                <div class="upgrader-container">
+                    <h2>Upgrader</h2>
+                    <p class="mode-info">Режим Upgrader - улучшай свои предметы и повышай их стоимость!</p>
+                    
+                    <div class="bet-amount">
+                        <label>Сумма для апгрейда:</label>
+                        <div class="bet-input-group">
+                            <button class="bet-btn" onclick="setUpgraderBet(10)">10₽</button>
+                            <button class="bet-btn" onclick="setUpgraderBet(50)">50₽</button>
+                            <button class="bet-btn" onclick="setUpgraderBet(100)">100₽</button>
+                            <button class="bet-btn" onclick="setUpgraderBet(500)">500₽</button>
+                            <input type="number" id="upgraderBetInput" placeholder="Своя сумма" min="1">
+                        </div>
+                        <p class="bet-display">Текущая ставка: <span id="currentUpgraderBet">0</span>₽</p>
+                    </div>
+
+                    <div class="upgrader-wheel-container">
+                        <div class="upgrader-wheel" id="upgraderWheel">
+                            <div class="upgrader-item" style="background: linear-gradient(135deg, #1e90ff, #00bfff);">
+                                <span>x1.2</span>
+                                <p>Мало</p>
+                            </div>
+                            <div class="upgrader-item" style="background: linear-gradient(135deg, #228b22, #00ff00);">
+                                <span>x1.5</span>
+                                <p>Хорошо</p>
+                            </div>
+                            <div class="upgrader-item" style="background: linear-gradient(135deg, #ff1493, #ff69b4);">
+                                <span>x2.0</span>
+                                <p>Отлично</p>
+                            </div>
+                            <div class="upgrader-item" style="background: linear-gradient(135deg, #ffd700, #ffed4e);">
+                                <span>x3.0</span>
+                                <p>Эпик</p>
+                            </div>
+                            <div class="upgrader-item" style="background: linear-gradient(135deg, #ff4500, #ff6347);">
+                                <span>x0.5</span>
+                                <p>Проиграл</p>
+                            </div>
+                            <div class="upgrader-item" style="background: linear-gradient(135deg, #9370db, #da70d6);">
+                                <span>x5.0</span>
+                                <p>ЛЕГЕНДА</p>
+                            </div>
+                        </div>
+                        <div class="wheel-pointer"></div>
+                    </div>
+
+                    <button class="spin-btn" id="upgraderSpinBtn" onclick="spinUpgrader()">АПГРЕЙДИТЬ</button>
+                    <div class="result" id="upgraderResult"></div>
+                </div>
+            </section>
+
+            <!-- Crash режим -->
+            <section class="mode-content" id="crash">
+                <div class="crash-container">
+                    <h2>Crash</h2>
+                    <p class="mode-info">Угадай, когда граф упадёт!</p>
+                    
+                    <div class="bet-amount">
+                        <label>Ставка:</label>
+                        <div class="bet-input-group">
+                            <button class="bet-btn" onclick="setCrashBet(10)">10₽</button>
+                            <button class="bet-btn" onclick="setCrashBet(50)">50₽</button>
+                            <button class="bet-btn" onclick="setCrashBet(100)">100₽</button>
+                            <button class="bet-btn" onclick="setCrashBet(500)">500₽</button>
+                            <input type="number" id="crashBetInput" placeholder="Своя сумма" min="1">
+                        </div>
+                        <p class="bet-display">Текущая ставка: <span id="currentCrashBet">0</span>₽</p>
+                    </div>
+
+                    <div class="crash-game">
+                        <canvas id="crashCanvas" width="400" height="200"></canvas>
+                        <div class="crash-controls">
+                            <input type="number" id="cashOutValue" placeholder="Выйти при (x)" min="1" step="0.1" value="2">
+                            <button class="spin-btn" id="crashStartBtn" onclick="startCrash()">НАЧАТЬ</button>
+                            <button class="spin-btn" id="crashCashOutBtn" onclick="crashCashOut()" disabled>ВЫЙТИ</button>
+                        </div>
+                        <div class="crash-result" id="crashResult"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Лесенка режим -->
+            <section class="mode-content" id="ladder">
+                <div class="ladder-container">
+                    <h2>Лесенка</h2>
+                    <p class="mode-info">Выбирай правильно и поднимайся по лесенке!</p>
+                    
+                    <div class="bet-amount">
+                        <label>Ставка:</label>
+                        <div class="bet-input-group">
+                            <button class="bet-btn" onclick="setLadderBet(10)">10₽</button>
+                            <button class="bet-btn" onclick="setLadderBet(50)">50₽</button>
+                            <button class="bet-btn" onclick="setLadderBet(100)">100₽</button>
+                            <button class="bet-btn" onclick="setLadderBet(500)">500₽</button>
+                            <input type="number" id="ladderBetInput" placeholder="Своя сумма" min="1">
+                        </div>
+                        <p class="bet-display">Текущая ставка: <span id="currentLadderBet">0</span>₽</p>
+                    </div>
+
+                    <div class="ladder-game">
+                        <div class="ladder-steps" id="ladderSteps">
+                            <div class="ladder-step">Уровень 1</div>
+                            <div class="ladder-step">Уровень 2</div>
+                            <div class="ladder-step">Уровень 3</div>
+                            <div class="ladder-step">Уровень 4</div>
+                            <div class="ladder-step">Уровень 5</div>
+                        </div>
+                        <div class="ladder-choices">
+                            <button class="choice-btn" id="ladderChoiceLeft" onclick="ladderChoice('left')">ЛЕВЫЙ</button>
+                            <button class="choice-btn" id="ladderChoiceRight" onclick="ladderChoice('right')">ПРАВЫЙ</button>
+                        </div>
+                        <div class="ladder-result" id="ladderResult"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Сапер режим -->
+            <section class="mode-content" id="minesweeper">
+                <div class="minesweeper-container">
+                    <h2>Сапер</h2>
+                    <p class="mode-info">Найди безопасные клетки и вы��грай!</p>
+                    
+                    <div class="bet-amount">
+                        <label>Ставка:</label>
+                        <div class="bet-input-group">
+                            <button class="bet-btn" onclick="setMinesweeperBet(10)">10₽</button>
+                            <button class="bet-btn" onclick="setMinesweeperBet(50)">50₽</button>
+                            <button class="bet-btn" onclick="setMinesweeperBet(100)">100₽</button>
+                            <button class="bet-btn" onclick="setMinesweeperBet(500)">500₽</button>
+                            <input type="number" id="minesweeperBetInput" placeholder="Своя сумма" min="1">
+                        </div>
+                        <p class="bet-display">Текущая ставка: <span id="currentMinesweeperBet">0</span>₽</p>
+                    </div>
+
+                    <div class="minesweeper-game">
+                        <div class="minesweeper-grid" id="minesweeperGrid"></div>
+                        <div class="minesweeper-controls">
+                            <button class="spin-btn" id="minesweeperStartBtn" onclick="startMinesweeper()">НАЧАТЬ ИГРУ</button>
+                            <button class="spin-btn" id="minesweeperCashOutBtn" onclick="minesweeperCashOut()" disabled>ВЫЙТИ И ЗАБРАТЬ</button>
+                        </div>
+                        <div class="minesweeper-result" id="minesweeperResult"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
